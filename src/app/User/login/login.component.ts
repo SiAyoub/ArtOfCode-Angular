@@ -12,11 +12,12 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   email: string | undefined;
   password: string | undefined;
-
+  error:string |undefined;
   constructor(
     private userService: UserService,
     private userAuthService: UserAuthService, // Inject the UserAuthService
-    private router:Router
+    private router:Router,
+    
   ) { }
 
   ngOnInit(): void {}
@@ -37,7 +38,8 @@ export class LoginComponent implements OnInit {
         }
       },
       (error) => {
-        console.log("Login failed", error);
+        console.log("Login failed", error.error.error);
+        this.error= error.error.error
         // Handle login failure, e.g., display error message to the user
       }
     );
