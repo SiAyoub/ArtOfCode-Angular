@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/profile']);
             } else {
               // Profile exists, redirect to profile page
-              this.router.navigate([`/myprofile/${this.id}`]);
+              this.router.navigate(['/']);
             }
           },
           (error) => {

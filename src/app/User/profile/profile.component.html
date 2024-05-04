@@ -118,80 +118,92 @@
     }
 
     .btn-custom:hover {
-      background-color: hsl(335, 72%, 52%);
+      background-color: #0056b3;
     }
-    .card{
-      width: 35rem;
-      height:35rem;
-    }
-    button{
-      width:15rem;
-      background-color: hsl(335, 72%, 52%);
-    }
-    button:hover{
-      background-color: hsl(335, 67%, 26%);
-    }
+
   </style>
 </head>
 <body>
   <div class="progress">
     <div class="progress-bar" role="progressbar" [style.width.%]="progressWidth"></div>
-  </div >
-  <div class="container bg-gray">
-  <div  class="bg-white shadow rounded card d-flex flex-column justify-content-center align-items-center ">
+  </div>
+  
+  <div class="container">
     <div class="step" *ngFor="let step of steps; let i = index" [ngClass]="{'active': i === currentStep}">
       <h2 class="step-title">{{ step }}</h2>
-      <form #profileForm="ngForm" (ngSubmit)="onSubmit($event); false" class="profile-form">
+      <form #profileForm="ngForm" (ngSubmit)="onSubmit()" class="profile-form">
         <!-- Input fields for each step -->
         <div *ngIf="i === 0" class="form-group text-center">
-          <label for="fileInput" class="file-upload-button" ><i class="fas fa-upload mr-2"></i>Upload Photo</label>
+          <label for="fileInput" class="file-upload-button"><i class="fas fa-upload mr-2"></i>Upload Photo</label>
           <input type="file" class="file-input" id="fileInput" (change)="onFileSelected($event)">
         </div>
         <div *ngIf="selectedFile" class="form-group text-center">
           <img [src]="previewImageUrl" class="img-thumbnail" alt="Preview">
         </div>
-        <div *ngIf="i === 1 && selectedFile" class="d-flex flex-column justify-content-center align-items-center">
+        <div *ngIf="i === 1 && selectedFile" class="form-group">
           <label class="animated-label">Music Preference</label>
-          <div class="btn-group btn-group-toggle " data-toggle="buttons">
-            <label class="btn btn-secondary active">
-              <input type="radio" name="options" id="option1" autocomplete="off" checked> Checked
+          <div *ngFor="let genre of musicGenres">
+            <label class="radio-container">{{genre}}
+              <input type="radio" name="musicpref" [(ngModel)]="profile.musicPrefInput" [value]="genre">
+              <span class="checkmark"></span>
             </label>
-            <label class="btn btn-secondary">
-              <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+          </div>
+        </div>
+        <div *ngIf="i === 2 && profile.musicPrefInput && selectedFile" class="form-group">
+          <label class="animated-label">Dance Music Preference</label>
+          <div *ngFor="let dance of danceGenres">
+            <label class="radio-container">{{dance}}
+              <input type="radio" name="dancemusicpref" [(ngModel)]="profile.dancePrefInput" [value]="dance">
+              <span class="checkmark"></span>
             </label>
-            <label class="btn btn-secondary active">
-              <input type="radio" name="options" id="option3" autocomplete="off" checked> Checked
-            </label>
-            <label class="btn btn-secondary">
-              <input type="radio" name="options" id="option4" autocomplete="off"> Radio
-            </label>
-            <label class="btn btn-secondary">
-              <input type="radio" name="options" id="option5" autocomplete="off"> Radio
+          </div>
+        </div>
+        <div *ngIf="i === 3 && profile.dancePrefInput && selectedFile" class="form-group">
+          <label class="animated-label">Will</label>
+          <div *ngFor="let w of willOptions">
+            <label class="radio-container">{{w}}
+              <input type="radio" name="will" [(ngModel)]="profile.willInput" [value]="w">
+              <span class="checkmark"></span>
             </label>
           </div>
         </div>
         
-        
-        <div *ngIf="i === 2 && musicPrefInput && selectedFile" class="form-group">
-          <label class="animated-label" for="dancemusicpref">Dance Music Preference</label>
-          <input type="text" class="form-control" id="dancemusicpref" name="dancemusicpref" [(ngModel)]="danceMusicPrefInput" placeholder="Your favorite dance music genre">
-        </div>
-        <div *ngIf="i === 3 && danceMusicPrefInput && selectedFile" class="form-group">
-          <label class="animated-label" for="will">Will</label>
-          <input type="text" class="form-control" id="will" name="will" [(ngModel)]="willInput" placeholder="Your will">
-        </div>
-        <div *ngIf="i === 4 && willInput && selectedFile" class="form-group">
+        <div *ngIf="i === 4 && profile.willInput && selectedFile" class="form-group">
           <label class="animated-label" for="aboutMe">About Me</label>
           <textarea class="form-control" id="aboutMe" name="aboutMe" [(ngModel)]="aboutMeInput" placeholder="Tell us about yourself"></textarea>
         </div>
+        <div *ngIf="i === 5 && aboutMeInput  && selectedFile" class="form-group">
+          <label class="animated-label" for="phoneNumber">Phone Number</label>
+          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumberInput" placeholder="Enter your phone number">
+        </div>
+        
+        <div *ngIf="i === 6 && phoneNumberInput && selectedFile" class="form-group">
+          <label class="animated-label" for="address">Address</label>
+          <input type="text" class="form-control" id="address" name="address" [(ngModel)]="addressInput" placeholder="Enter your address">
+        </div>
+        
+        <div *ngIf="i === 7 && addressInput && selectedFile" class="form-group">
+          <label class="animated-label" for="githubLink">GitHub Link</label>
+          <input type="text" class="form-control" id="githubLink" name="githubLink" [(ngModel)]="githubLinkInput" placeholder="Enter your GitHub link">
+        </div>
+        
+        <div *ngIf="i === 8 && githubLinkInput && selectedFile" class="form-group">
+          <label class="animated-label" for="facebookLink">Facebook Link</label>
+          <input type="text" class="form-control" id="facebookLink" name="facebookLink" [(ngModel)]="facebookLinkInput" placeholder="Enter your Facebook link">
+        </div>
+        
+        <div *ngIf="i === 9 && facebookLinkInput && selectedFile" class="form-group">
+          <label class="animated-label" for="instagramLink">Instagram Link</label>
+          <input type="text" class="form-control" id="instagramLink" name="instagramLink" [(ngModel)]="instagramLinkInput" placeholder="Enter your Instagram link">
+        </div>
         <!-- Add input fields for other steps similarly -->
-        <button *ngIf="currentStep < steps.length - 1" class="btn  btn-block " type="button" (click)="nextStep()">Next</button>
-        <button *ngIf="currentStep === steps.length - 1" class="btn  btn-block" type="submit" [disabled]="!selectedFile">Submit</button>
+        <button *ngIf="currentStep < steps.length - 1" class="btn btn-primary btn-block" type="button" (click)="nextStep()">Next</button>
+        <button *ngIf="currentStep === steps.length - 1" class="btn btn-primary btn-block" (click)="onSubmit()">Submit</button>
         <button *ngIf="currentStep > 0" class="btn btn-secondary btn-block" type="button" (click)="prevStep()">Previous</button>
       </form>
     </div>
- 
-</div></div>
+  </div>
+
   <!-- Bootstrap JS and Dependencies (if needed) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

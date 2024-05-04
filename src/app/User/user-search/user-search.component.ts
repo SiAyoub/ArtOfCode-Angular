@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-user-search',
   templateUrl: './user-search.component.html',
@@ -9,9 +10,9 @@ import { Router } from '@angular/router';
 export class UserSearchComponent {
   usernameInput: string = '';
   suggestedUsers: any[] = [];
-  suggestUsersImages: { [key: string]: string } = {};
+  suggestUsersImages: { [key: string]: string } = {}; // Store user images by user ID
 
-  constructor(private http: HttpClient,private router:Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   async handleUsernameInputChange(event: any): Promise<void> {
     this.usernameInput = event.target.value;
@@ -20,12 +21,12 @@ export class UserSearchComponent {
         const users = await this.http.get<any[]>(
           `http://localhost:8089/user/api/v1/auth/getUserByUsername?start=${this.usernameInput}`
         ).toPromise();
-        console.log(users)
+        console.log(users);
         if (users) {
           this.suggestedUsers = users;
-          // this.suggestedUsers.forEach(user => {
-          //   this.getUserImage(user._id);
-          // });
+          this.suggestedUsers.forEach(user => {
+            this.getProfilephoto(user); // Call getProfilephoto for each user
+          });
         }
       } catch (error) {
         console.error(error);
@@ -34,19 +35,17 @@ export class UserSearchComponent {
       this.suggestedUsers = [];
     }
   }
-
-  // async getUserImage(id: string): Promise<void> {
-  //   try {
-  //     const response = await this.http.get(
-  //       `https://esprit-compass-backend.vercel.app/user/get-image?id=${id}`,
-  //       { responseType: 'blob' }
-  //     ).toPromise();
-  //     const imageUrl = URL.createObjectURL(response);
-  //     this.suggestUsersImages[id] = imageUrl;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  getProfilephoto(user: any): void {
+    const id = user.id;
+    this.http.get(`http://localhost:8089/user/api/v1/auth/profile/profileimageid/${id}`, { responseType: 'blob' })
+      .subscribe((data: Blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.suggestUsersImages[id] = reader.result as string; // Store image URL for user ID
+        };
+        reader.readAsDataURL(data);
+      });
+  }
 
   clickUser(user: any): void {
     console.log(user);

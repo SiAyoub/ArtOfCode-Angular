@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/Services/profile.service';
 import { Router } from '@angular/router';
-
+import { Profile, dancepref, musicpref, will } from './Profile';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -11,15 +11,31 @@ export class ProfileComponent implements OnInit {
   isMusicSelected: any;
   userEmail: string | undefined;
   currentStep: number = 0;
-  steps: string[] = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5'];
+  steps: string[] = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5', 'Step 6', 'Step 7', 'Step 8', 'Step 9', 'Step 10'];
   progressWidth: number = 0;
+  profile: Profile = {
+    musicPrefInput: musicpref.CLASSICAL,
+    dancePrefInput: dancepref.HIP_HOP,
+    willInput: will.EVENTS
+  };
 
+  musicGenres = Object.values(musicpref);
+  danceGenres = Object.values(dancepref);
+  willOptions = Object.values(will);
   selectedFile: File | undefined;
   previewImageUrl: string | ArrayBuffer | null = null;
-  musicPrefInput: string | undefined;
-  danceMusicPrefInput: string | undefined;
-  willInput: string | undefined;
+  
   aboutMeInput: string | undefined;
+  phoneNumber: any;
+  githubLink: any;
+  address: any;
+  facebookLink: any;
+  instagramLink: any;
+  phoneNumberInput: any;
+  addressInput: any;
+  githubLinkInput: any;
+  facebookLinkInput: any;
+  instagramLinkInput: any;
 
   constructor(private profileService: ProfileService, private router: Router) { }
 
@@ -43,17 +59,25 @@ export class ProfileComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  onSubmit(event:any) {
-    if (!this.selectedFile || !this.musicPrefInput || !this.danceMusicPrefInput || !this.willInput || !this.aboutMeInput) {
+  onSubmit() {
+    if (!this.selectedFile || !this.musicGenres || !this.danceGenres || !this.willOptions || !this.aboutMeInput 
+     
+      
+      ) {
       return; // Validation failed
     }
 
     const formData = new FormData();
     formData.append('file', this.selectedFile);
-    formData.append('musicpref', this.musicPrefInput);
-    formData.append('dancemusicpref', this.danceMusicPrefInput);
-    formData.append('will', this.willInput);
+    formData.append('musicpref', this.profile.musicPrefInput);
+    formData.append('dancepref', this.profile.dancePrefInput);
+    formData.append('will', this.profile.willInput);
     formData.append('aboutMe', this.aboutMeInput);
+    formData.append('phonenumber', this.phoneNumberInput);
+    formData.append('address', this.addressInput);
+    formData.append('githublink', this.githubLinkInput);
+    formData.append('facebooklink', this.facebookLinkInput);
+    formData.append('instagramlink', this.instagramLinkInput);
 
     this.profileService.addProfile(formData).subscribe(
       response => {
@@ -61,7 +85,7 @@ export class ProfileComponent implements OnInit {
         // Reset form fields and preview image
         this.resetForm();
         // Redirect to desired route
-        this.router.navigate(['/myprofile']); // Adjust the route path as per your application's routing setup
+        this.router.navigate(['/']); // Adjust the route path as per your application's routing setup
       },
       error => {
         console.error('Error adding profile:', error);
@@ -91,9 +115,7 @@ export class ProfileComponent implements OnInit {
   resetForm() {
     this.selectedFile = undefined;
     this.previewImageUrl = null;
-    this.musicPrefInput = undefined;
-    this.danceMusicPrefInput = undefined;
-    this.willInput = undefined;
+    
     this.aboutMeInput = undefined;
   }
 }
