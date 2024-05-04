@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserAuthService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
  
   public setAuthenticationResponse(response: any): void {
     localStorage.setItem("access_token", response.access_token);
@@ -23,6 +24,11 @@ export class UserAuthService {
 
   public getRole(): string | null {
     return localStorage.getItem("role");
+  }
+  getDataFromToken(token:string|null){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log("service",headers)
+    return this.http.post<any>('http://localhost:8089/user/api/v1/auth/decode-token',{},{headers})
   }
 
   public clearAuthentication(): void {

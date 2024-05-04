@@ -1,39 +1,19 @@
-// profile.component.ts
-
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/Services/profile.service';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
-isMusicSelected: any;
-ngOnInit():void{
-  
- let token = localStorage.getItem('access_token')
- console.log(token)
-this.profileService.getDataFromToken(token).subscribe(response=>{
+export class ProfileComponent implements OnInit {
+  isMusicSelected: any;
+  userEmail: string | undefined;
+  currentStep: number = 0;
+  steps: string[] = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5'];
+  progressWidth: number = 0;
 
-  console.log(response)
-}
-)
-}
-toggleMusicIcon() {
-throw new Error('Method not implemented.');
-}
-isDanceSelected: any;
-toggleDanceIcon() {
-throw new Error('Method not implemented.');
-}
-isWillSelected: any;
-toggleWillIcon() {
-throw new Error('Method not implemented.');
-}
-selectOption(arg0: string) {
-throw new Error('Method not implemented.');
-}
   selectedFile: File | undefined;
   previewImageUrl: string | ArrayBuffer | null = null;
   musicPrefInput: string | undefined;
@@ -41,7 +21,15 @@ throw new Error('Method not implemented.');
   willInput: string | undefined;
   aboutMeInput: string | undefined;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private router: Router) { }
+
+  ngOnInit(): void {
+    let token = localStorage.getItem('access_token');
+    console.log(token);
+    this.profileService.getDataFromToken(token).subscribe(response => {
+      console.log(response);
+    });
+  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -55,7 +43,7 @@ throw new Error('Method not implemented.');
     reader.readAsDataURL(file);
   }
 
-  onSubmit() {
+  onSubmit(event:any) {
     if (!this.selectedFile || !this.musicPrefInput || !this.danceMusicPrefInput || !this.willInput || !this.aboutMeInput) {
       return; // Validation failed
     }
@@ -72,12 +60,32 @@ throw new Error('Method not implemented.');
         console.log('Profile added successfully:', response);
         // Reset form fields and preview image
         this.resetForm();
+        // Redirect to desired route
+        this.router.navigate(['/myprofile']); // Adjust the route path as per your application's routing setup
       },
       error => {
         console.error('Error adding profile:', error);
         // Handle error
       }
     );
+  }
+
+  nextStep() {
+    if (this.currentStep < this.steps.length - 1) {
+      this.currentStep++;
+      this.updateProgress();
+    }
+  }
+
+  prevStep() {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+      this.updateProgress();
+    }
+  }
+
+  updateProgress() {
+    this.progressWidth = ((this.currentStep + 1) / this.steps.length) * 100;
   }
 
   resetForm() {
@@ -87,11 +95,5 @@ throw new Error('Method not implemented.');
     this.danceMusicPrefInput = undefined;
     this.willInput = undefined;
     this.aboutMeInput = undefined;
-    const isMusicSelected  = undefined;
-  const isDanceSelected = false;
-  const isWillSelected = false;
-  this.willInput= undefined;
   }
 }
-
-

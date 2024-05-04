@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
+  getDataFromToken(token: any) {
+    throw new Error('Method not implemented.');
+  }
   submit(value: any) {
     throw new Error('Method not implemented.');
   }

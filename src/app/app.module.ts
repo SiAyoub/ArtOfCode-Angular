@@ -21,6 +21,8 @@ import { ProfileComponent } from './User/profile/profile.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MyprofileComponent } from './User/myprofile/myprofile.component';
+import { UserSearchComponent } from './User/user-search/user-search.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     RegisterconfirmationComponent,
     ProfileComponent,
+    MyprofileComponent,
+    UserSearchComponent,
  
   ],
   imports: [

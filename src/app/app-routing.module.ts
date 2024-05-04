@@ -7,11 +7,17 @@ import { RegisterComponent } from './User/register/register.component';
 import { ShowUsersComponent } from './User/ShowUsers/showusers/showusers.component';
 import { RegisterconfirmationComponent } from './User/registerconfirmation/registerconfirmation.component';
 import { ProfileComponent } from './User/profile/profile.component';
+import { MyprofileComponent } from './User/myprofile/myprofile.component';
 const routes: Routes = [
 
 {
   path:"",
   component:AllTemplateFrontComponent
+
+},
+{
+  path:"myprofile/:id",
+  component:MyprofileComponent
 
 },
 {
