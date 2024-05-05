@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
     
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(localStorage.getItem('access_token'))
+  }
 
   login(loginForm: NgForm) {
     this.userService.login(loginForm.value).subscribe(

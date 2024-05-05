@@ -19,6 +19,11 @@ export class HeaderFrontComponent implements OnInit {
     private router:Router,
     
   ) { }
+  logout(){
+    console.log("logout")
+    localStorage.removeItem('access_token')
+    this.router.navigate(["/login"])
+  }
 
   ngOnInit(): void {
  

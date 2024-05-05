@@ -27,4 +27,20 @@ public register(registerData: any) {
 getAllUsers() {
   return this.httpclient.get<any[]>( this.PATH_OF_API+"/user/api/v1/auth/admin/getall");
 }
+getUserFollowerUsers(userId: string | null)  {
+  return this.httpclient.get<any[]>(`http://localhost:8089/user/api/v1/auth/getUserFollowerUsers/${userId}`);
+}
+
+followUser(userId: number, followUserId: number) {
+  return this.httpclient.post<any[]>(`http://localhost:8089/user/api/v1/auth/followUser/${userId}/${followUserId}`, {});
+}
+
+unfollowUser(userId: number, unfollowUserId: number) {
+  return this.httpclient.post<any[]>(`http://localhost:8089/user/api/v1/auth/unfollowUser/${userId}/${unfollowUserId}`, {});
+}
+
+
+getUserFollowingUsers(userId: number) {
+  return this.httpclient.get<any[]>(`http://localhost:8089/user/api/v1/auth/getUserFollowingUsers/${userId}`);
+}
 }

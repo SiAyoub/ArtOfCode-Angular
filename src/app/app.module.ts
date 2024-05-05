@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyprofileComponent } from './User/myprofile/myprofile.component';
 import { UserSearchComponent } from './User/user-search/user-search.component';
+import { AuthNavbarComponent } from './Services/auth-navbar/auth-navbar.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { UserSearchComponent } from './User/user-search/user-search.component';
     ProfileComponent,
     MyprofileComponent,
     UserSearchComponent,
+    AuthNavbarComponent,
  
   ],
   imports: [

@@ -162,7 +162,7 @@
           <label class="animated-label">Will</label>
           <div *ngFor="let w of willOptions">
             <label class="radio-container">{{w}}
-              <input type="radio" name="will" [(ngModel)]="profile.willInput" [value]="w">
+              <input type="radio" name="will" [(ngModel)]="willOptions" [value]="w">
               <span class="checkmark"></span>
             </label>
           </div>

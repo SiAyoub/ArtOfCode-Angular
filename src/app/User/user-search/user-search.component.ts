@@ -12,7 +12,9 @@ export class UserSearchComponent {
   suggestedUsers: any[] = [];
   suggestUsersImages: { [key: string]: string } = {}; // Store user images by user ID
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    
+   }
 
   async handleUsernameInputChange(event: any): Promise<void> {
     this.usernameInput = event.target.value;

@@ -1,4 +1,9 @@
-
+<style>
+  .hanshn:hover{
+    background-color: beige;
+    cursor: pointer;
+  }
+</style>
 <div class="container">
   <app-header-front />
     <div class="main-body">
@@ -7,7 +12,6 @@
         
     
           <!-- /Breadcrumb -->
-         
 
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -19,7 +23,9 @@
                       <h4>{{ firstname }} {{ lastname }}</h4>
                       <p class="text-secondary mb-1">{{aboutme}}</p>
                       
-                      <button class="btn btn-primary">Follow</button>
+                      <button class="btn btn-primary" (click)="follow()" *ngIf="!isMyprofile && !isFollowing">Follow</button>
+                      <button class="btn btn-danger" (click)="unfollow()" *ngIf="isFollowing && !isMyprofile">Unfollow</button>
+
                      
                     </div>
                   </div>
@@ -41,6 +47,19 @@
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
                     <span class="text-secondary">bootdey</span>
                   </li>
+                </ul>
+              </div>
+              <div class="card mt-3">
+                <h5 class="ms-2 mt-1">Follow List</h5 >
+                <ul class="list-group list-group-flush" *ngFor="let user of followedUsers">
+                 
+                  <li (click)="clickfollowedUser(user.id)" class="list-group-item hanshn d-flex justify-contentstart align-items-center flex-wrap">
+                    <img *ngIf="suggestUsersImages[user.id]" [src]="suggestUsersImages[user.id]" alt="User Image" style="width: 30px; height: 30px; border-radius: 50%;">
+
+                    <span class="text-secondary ms-3">{{user.firstname}}</span>
+                  </li>
+                  
+             
                 </ul>
               </div>
             </div>
@@ -94,7 +113,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                      <a class="btn btn-info " *ngIf="isMyprofile" target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
                     </div>
                   </div>
                 </div>
