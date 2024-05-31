@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/Services/profile.service';
 import { Router } from '@angular/router';
-import { Profile, dancepref, musicpref, will } from './Profile';
+import { Profile, dancepref, musicpref} from './Profile';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -11,17 +11,17 @@ export class ProfileComponent implements OnInit {
   isMusicSelected: any;
   userEmail: string | undefined;
   currentStep: number = 0;
-  steps: string[] = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5', 'Step 6', 'Step 7', 'Step 8', 'Step 9', 'Step 10'];
+  steps: string[] = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5', 'Step 6', 'Step 7', 'Step 8', 'Step 9'];
   progressWidth: number = 0;
   profile: Profile = {
     musicPrefInput: musicpref.CLASSICAL,
     dancePrefInput: dancepref.HIP_HOP,
-    willInput: will.EVENTS
+   
   };
 
   musicGenres = Object.values(musicpref);
   danceGenres = Object.values(dancepref);
-  willOptions = Object.values(will);
+ 
   selectedFile: File | undefined;
   previewImageUrl: string | ArrayBuffer | null = null;
   
@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.selectedFile || !this.musicGenres || !this.danceGenres || !this.willOptions || !this.aboutMeInput 
+    if (!this.selectedFile || !this.musicGenres || !this.danceGenres || !this.aboutMeInput 
      
       
       ) {
@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
     formData.append('file', this.selectedFile);
     formData.append('musicpref', this.profile.musicPrefInput);
     formData.append('dancepref', this.profile.dancePrefInput);
-    formData.append('will', this.profile.willInput);
+   
     formData.append('aboutMe', this.aboutMeInput);
     formData.append('phonenumber', this.phoneNumberInput);
     formData.append('address', this.addressInput);

@@ -10,7 +10,9 @@ import { UserService } from 'src/app/Services/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit{
-  model: any = {};
+  model: any = {
+    role: 'USER'
+  };
 
   constructor(  private userService: UserService,
     private userAuthService: UserAuthService, // Inject the UserAuthService

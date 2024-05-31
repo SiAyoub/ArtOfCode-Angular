@@ -158,17 +158,9 @@
             </label>
           </div>
         </div>
-        <div *ngIf="i === 3 && profile.dancePrefInput && selectedFile" class="form-group">
-          <label class="animated-label">Will</label>
-          <div *ngFor="let w of willOptions">
-            <label class="radio-container">{{w}}
-              <input type="radio" name="will" [(ngModel)]="willOptions" [value]="w">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-        </div>
         
-        <div *ngIf="i === 4 && profile.willInput && selectedFile" class="form-group">
+        
+        <div *ngIf="i === 4 && profile.dancePrefInput && selectedFile" class="form-group">
           <label class="animated-label" for="aboutMe">About Me</label>
           <textarea class="form-control" id="aboutMe" name="aboutMe" [(ngModel)]="aboutMeInput" placeholder="Tell us about yourself"></textarea>
         </div>

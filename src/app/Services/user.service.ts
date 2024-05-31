@@ -43,4 +43,7 @@ unfollowUser(userId: number, unfollowUserId: number) {
 getUserFollowingUsers(userId: number) {
   return this.httpclient.get<any[]>(`http://localhost:8089/user/api/v1/auth/getUserFollowingUsers/${userId}`);
 }
+getUsersSuggested(userId:number){
+  return this.httpclient.get<any[]>(`http://localhost:8089/user/api/v1/auth/getUsersSuggested/${userId}`);
+}
 }

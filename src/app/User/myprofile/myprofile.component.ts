@@ -31,7 +31,8 @@ export class MyprofileComponent implements OnInit {
   phonenumber: any;
   followedUsers:any;
   suggestUsersImages: { [key: string]: string } = {}; // Store user images by user ID
-
+  suggestedUsers: any[] = []; // Array to store suggested users
+  suggestedUsersImages: { [key: string]: string } = {}; 
   constructor(
     private profileService: ProfileService,
     private userService:UserService,
@@ -50,45 +51,47 @@ export class MyprofileComponent implements OnInit {
         this.id = params.get('id');
         this.isMyprofile = (params.get('id') == response.id)
         this.userService.getUserFollowerUsers(response.id).subscribe(response=>{
-            console.log("follow list ",response)
-            this.followedUsers = response;
-           response.forEach(user => {
-              this.getfollowedProfilephoto(user); // Call getProfilephoto for each user
-            });
-           response.map(user=>{
-            if(user.id == params.get("id"))
-            {
+          console.log("follow list ",response)
+          this.followedUsers = response;
+          response.forEach(user => {
+            this.getfollowedProfilephoto(user); // Call getProfilephoto for each user
+          });
+          response.map((user: any) => { // Specify the type of user
+            if(user.id == params.get("id")) {
               this.isFollowing = true;
             }
-           })
-           console.log("is following ?",this.isFollowing)
-
-
+          })
+          console.log("is following ?",this.isFollowing)
         })
-        this.profileService.getUserById(params.get('id')).subscribe(response => {
-          console.log("user from id", response);
-          this.firstname = response.firstname;
-          this.lastname = response.lastname;
-          this.email = response.email;
-          this.imgname = response.profile.profilephoto;
+        this.userService.getUsersSuggested(response.id).subscribe(suggestedResponse => {
+          console.log("Suggested users:", suggestedResponse);
+          // Filter out users from suggested list who are already followed
+          this.suggestedUsers = suggestedResponse.filter((user: any) => !this.followedUsers.find((followedUser: any) => followedUser.id === user.id));
+          this.suggestedUsers.forEach(user => {
+            this.getSuggestedphoto(user); // Call getProfilephoto for each user
+          }); // Fetch images of suggested users
+        });
+  
+        this.profileService.getUserById(params.get('id')).subscribe(profileResponse => {
+          console.log("user from id", profileResponse);
+          this.firstname = profileResponse.firstname;
+          this.lastname = profileResponse.lastname;
+          this.email = profileResponse.email;
+          this.imgname = profileResponse.profile.profilephoto;
           this.getProfilephoto(this.imgname); // Call the function to fetch profile photo
-          this.aboutme=response.profile.aboutMe;
-          this.phone=response.profile.phonenumber;
-          this.adress=response.profile.address;
-          this.dancepref=response.profile.dancepref;
-          this.musicpref=response.profile.musicpref;
-          this.will=response.profile.will;
-          this.facebooklink=response.profile.facebooklink;
-          this.githublink=response.profile.githublink;
-          this.instagramlink=response.profile.instagramlink;
+          this.aboutme=profileResponse.profile.aboutMe;
+          this.phone=profileResponse.profile.phonenumber;
+          this.adress=profileResponse.profile.address;
+          this.dancepref=profileResponse.profile.dancepref;
+          this.musicpref=profileResponse.profile.musicpref;
+          this.will=profileResponse.profile.will;
+          this.facebooklink=profileResponse.profile.facebooklink;
+          this.githublink=profileResponse.profile.githublink;
+          this.instagramlink=profileResponse.profile.instagramlink;
         });
       });
     });
-  
-   
-
   }
-
   getProfilephoto(imgname: any): void {
     this.http.get(`http://localhost:8089/user/api/v1/auth/profile/profileimage/${imgname}`, { responseType: 'blob' })
       .subscribe((data: Blob) => {
@@ -141,8 +144,22 @@ getfollowedProfilephoto(user: any): void {
       };
       reader.readAsDataURL(data);
     });
+
+}
+getSuggestedphoto(user: any): void {
+  const id = user.id;
+  this.http.get(`http://localhost:8089/user/api/v1/auth/profile/profileimageid/${id}`, { responseType: 'blob' })
+    .subscribe((data: Blob) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.suggestedUsersImages[id] = reader.result as string; // Store image URL for user ID
+      };
+      reader.readAsDataURL(data);
+    });
+
 }
 clickfollowedUser(id:any):void{
 this.router.navigate([`/myprofile/${id}`])
 }
+
 }

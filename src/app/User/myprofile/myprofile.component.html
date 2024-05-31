@@ -34,10 +34,6 @@
               <div class="card mt-3">
                 <ul class="list-group list-group-flush">
                  
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github mr-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>Github</h6>
-                    <span class="text-secondary">bootdey</span>
-                  </li>
                   
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
@@ -55,6 +51,19 @@
                  
                   <li (click)="clickfollowedUser(user.id)" class="list-group-item hanshn d-flex justify-contentstart align-items-center flex-wrap">
                     <img *ngIf="suggestUsersImages[user.id]" [src]="suggestUsersImages[user.id]" alt="User Image" style="width: 30px; height: 30px; border-radius: 50%;">
+
+                    <span class="text-secondary ms-3">{{user.firstname}}</span>
+                  </li>
+                  
+             
+                </ul>
+              </div>
+              <div class="card mt-3">
+                <h5 class="ms-2 mt-1">Suggested List</h5 >
+                <ul class="list-group list-group-flush" *ngFor="let user of suggestedUsers">
+                 
+                  <li (click)="clickfollowedUser(user.id)" class="list-group-item hanshn d-flex justify-contentstart align-items-center flex-wrap">
+                    <img *ngIf="suggestedUsersImages[user.id]" [src]="suggestedUsersImages[user.id]" alt="User Image" style="width: 30px; height: 30px; border-radius: 50%;">
 
                     <span class="text-secondary ms-3">{{user.firstname}}</span>
                   </li>
@@ -92,22 +101,15 @@
                       {{ phone }}
                     </div>
                   </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Mobile</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      (320) 380-4539
-                    </div>
-                  </div>
+                  
+            
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Address</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      Bay Area, San Francisco, CA
+                      {{adress}}
                     </div>
                   </div>
                   <hr>
@@ -123,27 +125,23 @@
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                      <small>Web Design</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Website Markup</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>One Page</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Mobile Template</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Backend API</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">star</i>{{firstname}} Preferences</h6>
+                     
+                    
+  <!-- Music Preferences -->
+  <div class="d-flex align-items-center mb-3">
+    <h6 class="mr-2 mb-0" style="font-size: 14px;">Music Preferences:</h6>
+    <i class="material-icons text-info mr-2" style="font-size: 16px;">music_note</i>
+    <span style="font-size: 14px;">{{musicpref}}</span>
+</div>
+
+<!-- Dance Preferences -->
+<div class="d-flex align-items-center mb-3">
+    <h6 class="mr-2 mb-0" style="font-size: 14px;">Dance Preferences:</h6>
+    <i class="material-icons text-info mr-2" style="font-size: 16px;">favorite</i>
+    <span style="font-size: 14px;">{{dancepref}}</span>
+</div>
+
                     </div>
                   </div>
                 </div>

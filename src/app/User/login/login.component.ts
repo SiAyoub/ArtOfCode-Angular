@@ -35,8 +35,12 @@ export class LoginComponent implements OnInit {
           (decodedResponse: any) => {
             console.log("Decoded token", decodedResponse);
             const profile = decodedResponse.profile;
+            const role=decodedResponse.role;
             this.id = decodedResponse.id;
             // Redirect based on profile
+            if (role=="ADMIN"){
+              this.router.navigate(['/admin'])
+            }else{
             if (!profile) {
               // Profile is null, redirect to create profile page
               this.router.navigate(['/profile']);
@@ -44,7 +48,7 @@ export class LoginComponent implements OnInit {
               // Profile exists, redirect to profile page
               this.router.navigate(['/']);
             }
-          },
+          }},
           (error) => {
             console.log("Error decoding token", error);
             // Handle error decoding token
@@ -55,6 +59,8 @@ export class LoginComponent implements OnInit {
         console.log("Login failed", error.error.error);
         this.error = error.error.error;
         // Handle login failure, e.g., display error message to the user
+      
+      
       }
     );
   }

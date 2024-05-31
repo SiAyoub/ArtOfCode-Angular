@@ -1,7 +1,7 @@
 export interface Profile {
     musicPrefInput: musicpref;
     dancePrefInput: dancepref;
-    willInput: will;
+
   }
   
   export enum dancepref {
@@ -21,10 +21,6 @@ export interface Profile {
     HIP_HOP = "HIP_HOP",
     ELECTRONIC = "ELECTRONIC",
   }
+
   
-  export enum will {
-    EVENTS = "EVENTS",
-    HIRE = "HIRE",
-    WORK = "WORK",
-  }
   

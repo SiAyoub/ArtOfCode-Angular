@@ -28,8 +28,10 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                    <div class="col-lg-7">
+                  <div class="col-lg-5 d-none d-lg-block">
+                    <img src="/assets/BackOffice/img/Login-pana.svg" alt="Login Image">
+                </div>
+                                    <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
@@ -53,12 +55,10 @@
                                     <label for="password">Password</label>
                                     <input type="password" id="password" name="password" class="form-control" required [(ngModel)]="model.password">
                                   </div>
-                                  <div class="form-group">
+                                  <div class="form-group" style="display: none;">
                                     <label for="role">Role</label>
                                     <select id="role" name="role" class="form-control" required [(ngModel)]="model.role">
-                                      <option value="USER">User</option>
-                                      <option value="ADMIN">Admin</option>
-                                      <option value="MANAGER">Manager</option>
+                                      <option value="USER" selected>User</option>
                                     </select>
                                   </div>
                                   <button type="submit" class="btn btn-primary">Register</button>
